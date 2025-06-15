@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focus Soundscape</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden; /* スクロールバーを非表示にする */
+        }
+        #threejs-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* 他のコンテンツの下に配置 */
+        }
+    </style>
+</head>
+<body>
+    <div id="threejs-container"></div>
+    <div id="app">
+        <h1>Focus Soundscape</h1>
+        <!-- 環境音のコントロールをここに追加 -->
+        <div id="sound-controls">
+            <button id="rain-button">雨</button>
+            <button id="fire-button">焚き火</button>
+            <button id="cafe-button">カフェ</button>
+            <button id="wave-button">波</button>
+        </div>
+
+        <!-- ポモドーロタイマーのコントロールをここに追加 -->
+        <div id="pomodoro-timer">
+            <div id="timer-display">25:00</div>
+            <button id="start-timer-button">開始</button>
+            <button id="pause-timer-button">一時停止</button>
+            <button id="reset-timer-button">リセット</button>
+        </div>
+
+        <!-- シンプルなタスクリストをここに追加 -->
+        <div id="task-list-container">
+            <h2>タスクリスト</h2>
+            <input type="text" id="new-task-input" placeholder="新しいタスクを追加">
+            <button id="add-task-button">追加</button>
+            <ul id="tasks"></ul>
+        </div>
+
+        <!-- ポモドーロタイマー、タスクリスト、アニメーション背景の要素もここに追加 -->
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
