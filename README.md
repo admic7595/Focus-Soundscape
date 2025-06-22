@@ -39,5 +39,4 @@
 - CSS3
 - JavaScript
 - Web Audio API
-- p5.js
 - Three.js
