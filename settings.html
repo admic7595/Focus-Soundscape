@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Google FontsとTailwindの読み込み -->
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+    <link rel="stylesheet" as="style" onload="this.rel='stylesheet'" href="https://fonts.googleapis.com/css2?display=swap&family=Noto+Sans:wght@400;500;700;900&family=Plus+Jakarta+Sans:wght@400;500;700;800" />
+    <title>設定 | Focus Soundscape</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  </head>
+  <body>
+    <div class="relative flex size-full min-h-screen flex-col bg-[#151a1e] dark group/design-root overflow-x-hidden" style='font-family: "Plus Jakarta Sans", "Noto Sans", sans-serif;'>
+      <div class="layout-container flex h-full grow flex-col">
+        <!-- ヘッダー（test.html/volume.htmlと同じUI） -->
+        <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#2c363f] px-10 py-3">
+          <div class="flex items-center gap-4 text-white">
+            <div class="size-4">
+              <!-- ロゴSVG -->
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M42.4379 44C42.4379 44 36.0744 33.9038 41.1692 24C46.8624 12.9336 42.2078 4 42.2078 4L7.01134 4C7.01134 4 11.6577 12.932 5.96912 23.9969C0.876273 33.9029 7.27094 44 7.27094 44L42.4379 44Z" fill="currentColor"></path>
+              </svg>
+            </div>
+            <h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">Focus Soundscape</h2>
+          </div>
+          <div class="flex flex-1 justify-end gap-8">
+            <div class="flex items-center gap-9">
+              <a class="text-white text-sm font-medium leading-normal" href="toppage.html">ホーム</a>
+              <a class="text-white text-sm font-medium leading-normal" href="#">探す</a>
+              <a class="text-white text-sm font-medium leading-normal" href="#">ライブラウリ</a>
+              <!-- ▼▼▼ ドロップダウンメニュー ▼▼▼ -->
+              <div class="relative group">
+                <button class="text-white text-sm font-medium leading-normal focus:outline-none flex items-center gap-1" id="menuDropdownBtn">
+                  メニュー
+                  <svg class="inline-block ml-1" width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z"/></svg>
+                </button>
+                <div class="hidden absolute right-0 mt-2 w-40 bg-[#232a31] rounded-lg shadow-lg z-50 border border-[#2c363f]" id="menuDropdown">
+                  <a href="volume.html" class="block px-4 py-2 text-white hover:bg-[#2c363f] text-sm rounded-t-lg">音量調整</a>
+                  <a href="timer.html" class="block px-4 py-2 text-white hover:bg-[#2c363f] text-sm">タイマー</a>
+                  <a href="settings.html" class="block px-4 py-2 text-white hover:bg-[#2c363f] text-sm">設定</a>
+                  <a href="preset.html" class="block px-4 py-2 text-white hover:bg-[#2c363f] text-sm rounded-b-lg">プリセット</a>
+                </div>
+              </div>
+              <!-- ▲▲▲ ドロップダウンメニュー ▲▲▲ -->
+            </div>
+            <button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 bg-[#2c363f] text-white gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+              <div class="text-white" data-icon="Bell" data-size="20px" data-weight="regular">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
+                  <path d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z"></path>
+                </svg>
+              </div>
+            </button>
+            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD1YeR2UWdVTSSpnif2LZVoVFAraCRMsxMmBEuBpmAlLc5RInoSXUiJPU5UlnyvLUYw5egpBrR0KGrdI3LEtxuHSDOzqkVe7YxfYAhDoMbWZaKLw5a4Vry06EKhDCN2IMkIqzTswR35YKIVpIcQcqND3lKU0bbTbO8UiB30Gfz42ahPsc3GUG9mevHEI2YpgZnVWRNWTcx3UPrv2_dCLu5KZ3jy8MLgnqV7NoCehB2SL_D4UA_VP32WJRpF0M6bzIU50BhWXMBEeCWH");'></div>
+          </div>
+        </header>
+        <!-- メインコンテンツ -->
+        <div class="px-40 flex flex-1 justify-center py-5">
+          <div class="layout-content-container flex flex-col max-w-[400px] flex-1">
+            <h2 class="text-white tracking-light text-[28px] font-bold leading-tight px-4 text-center pb-3 pt-5">設定</h2>
+            <!-- ▼▼▼ 設定UI ▼▼▼ -->
+            <div class="flex flex-col gap-6 p-4">
+              <!-- テーマ切替 -->
+              <div class="flex items-center gap-4">
+                <label class="text-white text-base font-medium" for="themeSwitch">テーマ</label>
+                <select id="themeSwitch" class="rounded bg-[#232a31] text-white px-2 py-1">
+                  <option value="dark">ダーク</option>
+                  <option value="light">ライト</option>
+                </select>
+                <!-- テーマ切替のコメント -->
+              </div>
+              <!-- 通知ON/OFF -->
+              <div class="flex items-center gap-4">
+                <label class="text-white text-base font-medium" for="notifySwitch">通知</label>
+                <input id="notifySwitch" type="checkbox" class="accent-[#bcd1e5]" />
+                <span class="text-white text-sm">ON/OFF</span>
+                <!-- 通知ON/OFFのコメント -->
+              </div>
+              <!-- 言語選択 -->
+              <div class="flex items-center gap-4">
+                <label class="text-white text-base font-medium" for="langSelect">言語</label>
+                <select id="langSelect" class="rounded bg-[#232a31] text-white px-2 py-1">
+                  <option value="ja">日本語</option>
+                  <option value="en">English</option>
+                </select>
+                <!-- 言語選択のコメント -->
+              </div>
+            </div>
+            <!-- ▲▲▲ 設定UI ▲▲▲ -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ▼▼▼ ドロップダウンの表示制御スクリプト ▼▼▼ -->
+    <script>
+      // ドロップダウンメニューの開閉制御
+      document.addEventListener('DOMContentLoaded', function() {
+        const btn = document.getElementById('menuDropdownBtn');
+        const menu = document.getElementById('menuDropdown');
+        if (btn && menu) {
+          btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            menu.classList.toggle('hidden');
+          });
+          document.addEventListener('click', function(e) {
+            if (!btn.contains(e.target) && !menu.contains(e.target)) {
+              menu.classList.add('hidden');
+            }
+          });
+        }
+        // ▼▼▼ テーマ切替の簡易実装 ▼▼▼
+        const themeSwitch = document.getElementById('themeSwitch');
+        themeSwitch.addEventListener('change', function() {
+          if (themeSwitch.value === 'light') {
+            document.body.classList.remove('bg-[#151a1e]');
+            document.body.classList.add('bg-white');
+          } else {
+            document.body.classList.remove('bg-white');
+            document.body.classList.add('bg-[#151a1e]');
+          }
+        });
+        // ▲▲▲ テーマ切替の簡易実装 ▲▲▲
+      });
+    </script>
+    <!-- ▲▲▲ ドロップダウンの表示制御スクリプト ▲▲▲ -->
+  </body>
+</html> 

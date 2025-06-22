@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Google FontsとTailwindの読み込み -->
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+    <link rel="stylesheet" as="style" onload="this.rel='stylesheet'" href="https://fonts.googleapis.com/css2?display=swap&family=Noto+Sans:wght@400;500;700;900&family=Plus+Jakarta+Sans:wght@400;500;700;800" />
+    <title>タイマー | Focus Soundscape</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  </head>
+  <body>
+    <!-- ▼▼▼ アニメーション背景用canvas ▼▼▼ -->
+    <canvas id="bg-canvas" style="position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:-1;"></canvas>
+    <!-- ▲▲▲ アニメーション背景用canvas ▲▲▲ -->
+    <div class="relative flex size-full min-h-screen flex-col bg-[#151a1e] dark group/design-root overflow-x-hidden" style='font-family: "Plus Jakarta Sans", "Noto Sans", sans-serif;'>
+      <div class="layout-container flex h-full grow flex-col">
+        <!-- ヘッダー（test.html/volume.htmlと同じUI） -->
+        <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#2c363f] px-10 py-3">
+          <div class="flex items-center gap-4 text-white">
+            <div class="size-4">
+              <!-- ロゴSVG -->
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M42.4379 44C42.4379 44 36.0744 33.9038 41.1692 24C46.8624 12.9336 42.2078 4 42.2078 4L7.01134 4C7.01134 4 11.6577 12.932 5.96912 23.9969C0.876273 33.9029 7.27094 44 7.27094 44L42.4379 44Z" fill="currentColor"></path>
+              </svg>
+            </div>
+            <h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">Focus Soundscape</h2>
+          </div>
+          <div class="flex flex-1 justify-end gap-8">
+            <div class="flex items-center gap-9">
+              <a class="text-white text-sm font-medium leading-normal" href="toppage.html">ホーム</a>
+              <a class="text-white text-sm font-medium leading-normal" href="#">探す</a>
+              <a class="text-white text-sm font-medium leading-normal" href="#">ライブラウリ</a>
+              <!-- ▼▼▼ ドロップダウンメニュー ▼▼▼ -->
+              <div class="relative group">
+                <button class="text-white text-sm font-medium leading-normal focus:outline-none flex items-center gap-1" id="menuDropdownBtn">
+                  メニュー
+                  <svg class="inline-block ml-1" width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z"/></svg>
+                </button>
+                <div class="hidden absolute right-0 mt-2 w-40 bg-[#232a31] rounded-lg shadow-lg z-50 border border-[#2c363f]" id="menuDropdown">
+                  <a href="volume.html" class="block px-4 py-2 text-white hover:bg-[#2c363f] text-sm rounded-t-lg">音量調整</a>
+                  <a href="timer.html" class="block px-4 py-2 text-white hover:bg-[#2c363f] text-sm">タイマー</a>
+                  <a href="settings.html" class="block px-4 py-2 text-white hover:bg-[#2c363f] text-sm">設定</a>
+                  <a href="preset.html" class="block px-4 py-2 text-white hover:bg-[#2c363f] text-sm rounded-b-lg">プリセット</a>
+                </div>
+              </div>
+              <!-- ▲▲▲ ドロップダウンメニュー ▲▲▲ -->
+            </div>
+            <button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 bg-[#2c363f] text-white gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+              <div class="text-white" data-icon="Bell" data-size="20px" data-weight="regular">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
+                  <path d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z"></path>
+                </svg>
+              </div>
+            </button>
+            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD1YeR2UWdVTSSpnif2LZVoVFAraCRMsxMmBEuBpmAlLc5RInoSXUiJPU5UlnyvLUYw5egpBrR0KGrdI3LEtxuHSDOzqkVe7YxfYAhDoMbWZaKLw5a4Vry06EKhDCN2IMkIqzTswR35YKIVpIcQcqND3lKU0bbTbO8UiB30Gfz42ahPsc3GUG9mevHEI2YpgZnVWRNWTcx3UPrv2_dCLu5KZ3jy8MLgnqV7NoCehB2SL_D4UA_VP32WJRpF0M6bzIU50BhWXMBEeCWH");'></div>
+          </div>
+        </header>
+        <!-- メインコンテンツ -->
+        <div class="px-40 flex flex-1 justify-center py-5">
+          <div class="layout-content-container flex flex-col max-w-[400px] flex-1">
+            <h2 class="text-white tracking-light text-[28px] font-bold leading-tight px-4 text-center pb-3 pt-5">タイマー</h2>
+            <!-- ▼▼▼ タイマー設定UI ▼▼▼ -->
+            <div class="flex flex-col gap-6 p-4 items-center">
+              <!-- 分・秒の入力欄 -->
+              <div class="flex gap-2 items-center">
+                <input id="minutes" type="number" min="0" max="99" value="25" class="w-16 rounded bg-[#232a31] text-white px-2 py-1 text-center" />
+                <label class="text-white text-base font-medium" for="minutes">分</label>
+                <input id="seconds" type="number" min="0" max="59" value="0" class="w-16 rounded bg-[#232a31] text-white px-2 py-1 text-center" />
+                <label class="text-white text-base font-medium" for="seconds">秒</label>
+              </div>
+              <!-- 開始・リセットボタン -->
+              <div class="flex gap-4">
+                <button id="startBtn" class="bg-[#bcd1e5] text-[#151a1e] font-bold rounded-full px-6 py-2">開始</button>
+                <button id="resetBtn" class="bg-[#2c363f] text-white font-bold rounded-full px-6 py-2">リセット</button>
+              </div>
+              <!-- 残り時間表示 -->
+              <div class="text-white text-2xl font-bold mt-4" id="timerDisplay">25:00</div>
+            </div>
+            <!-- ▲▲▲ タイマー設定UI ▲▲▲ -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ▼▼▼ ドロップダウンの表示制御＆タイマースクリプト ▼▼▼ -->
+    <script>
+      // ドロップダウンメニューの開閉制御
+      document.addEventListener('DOMContentLoaded', function() {
+        const btn = document.getElementById('menuDropdownBtn');
+        const menu = document.getElementById('menuDropdown');
+        if (btn && menu) {
+          btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            menu.classList.toggle('hidden');
+          });
+          document.addEventListener('click', function(e) {
+            if (!btn.contains(e.target) && !menu.contains(e.target)) {
+              menu.classList.add('hidden');
+            }
+          });
+        }
+        // ▼▼▼ タイマー機能 ▼▼▼
+        let timer = null;
+        let remaining = 1500; // 25*60 初期値
+        const display = document.getElementById('timerDisplay');
+        const minInput = document.getElementById('minutes');
+        const secInput = document.getElementById('seconds');
+        const startBtn = document.getElementById('startBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        function updateDisplay() {
+          const min = Math.floor(remaining / 60);
+          const sec = remaining % 60;
+          display.textContent = `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
+        }
+        function startTimer() {
+          if (timer) return;
+          timer = setInterval(() => {
+            if (remaining > 0) {
+              remaining--;
+              updateDisplay();
+            } else {
+              clearInterval(timer);
+              timer = null;
+            }
+          }, 1000);
+        }
+        function resetTimer() {
+          clearInterval(timer);
+          timer = null;
+          remaining = parseInt(minInput.value, 10) * 60 + parseInt(secInput.value, 10);
+          updateDisplay();
+        }
+        minInput.addEventListener('change', resetTimer);
+        secInput.addEventListener('change', resetTimer);
+        startBtn.addEventListener('click', startTimer);
+        resetBtn.addEventListener('click', resetTimer);
+        resetTimer();
+        // ▲▲▲ タイマー機能 ▲▲▲
+        // ▼▼▼ アニメーション背景スクリプト ▼▼▼
+        // DOMContentLoadedイベント内に追加
+        // canvas要素と2Dコンテキストを取得
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        // ウィンドウサイズに合わせてcanvasサイズを調整
+        function resizeCanvas() {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        // 再生中かどうかの仮フラグ（後でサウンド制御と連動）
+        let isPlaying = false;
+        // アニメーション描画関数
+        function draw() {
+          // 再生中なら明るい色、停止中なら暗い色
+          const bgColor = isPlaying ? 'rgba(100,180,255,0.25)' : 'rgba(30,40,60,0.25)';
+          // 背景を塗りつぶし
+          ctx.fillStyle = bgColor;
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          // 再生中は円が大きくなるアニメーション
+          const time = Date.now() * 0.002;
+          const radius = isPlaying ? 80 + Math.sin(time) * 40 : 60;
+          ctx.save();
+          ctx.globalAlpha = 0.5;
+          ctx.beginPath();
+          ctx.arc(canvas.width/2, canvas.height/2, radius, 0, Math.PI*2);
+          ctx.fillStyle = isPlaying ? '#bcd1e5' : '#2c363f';
+          ctx.fill();
+          ctx.restore();
+          requestAnimationFrame(draw);
+        }
+        draw();
+        // デモ用：タイマー開始で再生中フラグON、リセットでOFF
+        startBtn.addEventListener('click', () => { isPlaying = true; });
+        resetBtn.addEventListener('click', () => { isPlaying = false; });
+        // ▲▲▲ アニメーション背景スクリプト ▲▲▲
+        // ▼▼▼ Web Audio APIによるサウンド制御 ▼▼▼
+        // サウンドファイルのパス
+        const soundFiles = {
+          rain: 'sounds/rain.mp3',
+          cafe: 'sounds/cafe.mp3',
+          wave: 'sounds/wave.mp3',
+          fire: 'sounds/fire.mp3',
+        };
+        // AudioContextとAudioBufferSourceNodeの管理
+        let audioCtx = null;
+        let source = null;
+        // サウンド再生関数
+        async function playSound(type) {
+          // 既存のサウンドを停止
+          stopSound();
+          // AudioContextがなければ作成
+          if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          // サウンドファイルを取得
+          const response = await fetch(soundFiles[type]);
+          const arrayBuffer = await response.arrayBuffer();
+          const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+          // ソースノード作成
+          source = audioCtx.createBufferSource();
+          source.buffer = audioBuffer;
+          source.connect(audioCtx.destination);
+          source.loop = true; // ループ再生
+          source.start();
+          // アニメーション背景も再生状態に
+          isPlaying = true;
+        }
+        // サウンド停止関数
+        function stopSound() {
+          if (source) {
+            source.stop();
+            source.disconnect();
+            source = null;
+          }
+          isPlaying = false;
+        }
+        // ボタンイベント設定
+        document.getElementById('sound-rain').addEventListener('click', () => playSound('rain'));
+        document.getElementById('sound-cafe').addEventListener('click', () => playSound('cafe'));
+        document.getElementById('sound-wave').addEventListener('click', () => playSound('wave'));
+        document.getElementById('sound-fire').addEventListener('click', () => playSound('fire'));
+        document.getElementById('sound-stop').addEventListener('click', stopSound);
+        // ▲▲▲ Web Audio APIによるサウンド制御 ▲▲▲
+      });
+    </script>
+    <!-- ▲▲▲ ドロップダウンの表示制御＆タイマースクリプト ▲▲▲ -->
+  </body>
+</html> 

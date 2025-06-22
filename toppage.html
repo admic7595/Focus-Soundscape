@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Plus+Jakarta+Sans%3Awght%40400%3B500%3B700%3B800"
+    />
+
+    <title>Stitch Design</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script> -->
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.153.0/build/three.module.js"
+        }
+      }
+    </script>
+  </head>
+  <body style="margin:0; padding:0;">
+    <!-- ▼▼▼ p5.js用キャンバス（canvasをbody直下に直接描画） ▼▼▼ -->
+    <!--
+    <style>
+      #p5-canvas canvas {
+        position: fixed !important;
+        top: 0; left: 0;
+        width: 100vw !important;
+        height: 100vh !important;
+        z-index: -2 !important;
+        pointer-events: none;
+      }
+    </style>
+    <div id="p5-canvas"></div>
+    -->
+    <!-- ▲▲▲ p5.js用キャンバス ▲▲▲ -->
+    <style>
+      #three-canvas {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -2;
+        pointer-events: none;
+      }
+    </style>
+    <!-- Three.js用canvas -->
+    <div id="three-canvas"></div>
+    <div
+      class="relative flex size-full min-h-screen flex-col bg-[#151a1e] dark group/design-root overflow-x-hidden"
+      style='font-family: "Plus Jakarta Sans", "Noto Sans", sans-serif;'
+    >
+      <div class="layout-container flex h-full grow flex-col">
+        <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#2c363f] px-10 py-3">
+          <div class="flex items-center gap-4 text-white">
+            <div class="size-4">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M42.4379 44C42.4379 44 36.0744 33.9038 41.1692 24C46.8624 12.9336 42.2078 4 42.2078 4L7.01134 4C7.01134 4 11.6577 12.932 5.96912 23.9969C0.876273 33.9029 7.27094 44 7.27094 44L42.4379 44Z"
+                  fill="currentColor"
+                ></path>
+              </svg>
+            </div>
+            <h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">Focus Soundscape</h2>
+          </div>
+          <div class="flex flex-1 justify-end gap-8">
+            <div class="flex items-center gap-9">
+              <a class="text-white text-sm font-medium leading-normal" href="#">ホーム</a>
+              <a class="text-white text-sm font-medium leading-normal" href="#">探す</a>
+              <a class="text-white text-sm font-medium leading-normal" href="#">ライブラウリ</a>
+              <div class="relative group">
+                <button class="text-white text-sm font-medium leading-normal focus:outline-none flex items-center gap-1" id="menuDropdownBtn">
+                  メニュー
+                  <svg class="inline-block ml-1" width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z"/></svg>
+                </button>
+                <div class="hidden absolute right-0 mt-2 w-40 bg-[#232a31] rounded-lg shadow-lg z-50 border border-[#2c363f]" id="menuDropdown">
+                  <a href="volume.html" class="block px-4 py-2 text-white hover:bg-[#2c363f] text-sm rounded-t-lg">音量調整</a>
+                  <a href="timer.html" class="block px-4 py-2 text-white hover:bg-[#2c363f] text-sm">タイマー</a>
+                  <a href="settings.html" class="block px-4 py-2 text-white hover:bg-[#2c363f] text-sm">設定</a>
+                  <a href="preset.html" class="block px-4 py-2 text-white hover:bg-[#2c363f] text-sm rounded-b-lg">プリセット</a>
+                </div>
+              </div>
+            </div>
+            <button
+              class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 bg-[#2c363f] text-white gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
+            >
+              <div class="text-white" data-icon="Bell" data-size="20px" data-weight="regular">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
+                  <path
+                    d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z"
+                  ></path>
+                </svg>
+              </div>
+            </button>
+            <div
+              class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+              style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD1YeR2UWdVTSSpnif2LZVoVFAraCRMsxMmBEuBpmAlLc5RInoSXUiJPU5UlnyvLUYw5egpBrR0KGrdI3LEtxuHSDOzqkVe7YxfYAhDoMbWZaKLw5a4Vry06EKhDCN2IMkIqzTswR35YKIVpIcQcqND3lKU0bbTbO8UiB30Gfz42ahPsc3GUG9mevHEI2YpgZnVWRNWTcx3UPrv2_dCLu5KZ3jy8MLgnqV7NoCehB2SL_D4UA_VP32WJRpF0M6bzIU50BhWXMBEeCWH");'
+            ></div>
+          </div>
+        </header>
+        <div class="px-40 flex flex-1 justify-center py-5">
+          <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+            <h2 class="text-white tracking-light text-[28px] font-bold leading-tight px-4 text-center pb-3 pt-5">集中できる環境音を作成</h2>
+            
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
+              <div class="flex flex-col gap-3 pb-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB7jtq7iLcJljf3JubXdlGmK17PG7fy2UuMUobtIhLMXqSyFE3lLTgkfBSK0XZNBFIkuLL4IAhG0BzPwGfTaFN-r5-4X-jGQ7EtF7fqIYnJK6Q0Q8GBGBgP4GlMplN5EieXh2XurZwzsJ__FGRSpnnj5PsIGt--RB7y233jnLMoKucB5teqC2Jy7oO9CwMxFtYirXAZe6FncqXl6AZnUw6MgHlqqXNJdgcWaE96brB70QEIEw9lyGxcdvmvkKo_cGueVa5UUh3y4_XH");'
+                ></div>
+                <div class="flex items-center gap-2">
+                  <p class="text-white text-base font-medium leading-normal mb-0">雨</p>
+                  <button id="play-rain" class="bg-[#bcd1e5] text-[#151a1e] rounded-full w-8 h-8 flex items-center justify-center focus:outline-none">
+                    <span id="icon-rain">
+                      <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor"><polygon points="5,3 15,9 5,15"/></svg>
+                    </span>
+                  </button>
+                </div>
+                <input id="volume-rain" type="range" min="0" max="1" step="0.01" value="0.5" class="w-full mt-1 accent-[#bcd1e5]">
+              </div>
+              <div class="flex flex-col gap-3 pb-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD0DVFB5Oz0WZwCUDZYjQYdzSwl_yfa-KqasvyZeDlB1YnuOB9ttjTWT1HFn9CwHINrjmYmGt6r4e1JeQNmFzsxaXcIEbDC2CH0qCQg3sgFaOVSWaaV9RDXt2M6kdMLZ6QgE6nYj9YGA835XvqIQXoTfQrY3P4dCnGsqTb3BwotYxvoixo6dEX-blhuxkuY2zhZABFDV6v4gvgzS8mxTKl4ZCvCDKK4TO3I56ETYZWz7D_moSjCHEmK64KBuGvU2y0UPOMQh7eyDXDt");'
+                ></div>
+                <div class="flex items-center gap-2">
+                  <p class="text-white text-base font-medium leading-normal mb-0">焚き火</p>
+                  <button id="play-fire" class="bg-[#bcd1e5] text-[#151a1e] rounded-full w-8 h-8 flex items-center justify-center focus:outline-none">
+                    <span id="icon-fire">
+                      <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor"><polygon points="5,3 15,9 5,15"/></svg>
+                    </span>
+                  </button>
+                </div>
+                <input id="volume-fire" type="range" min="0" max="1" step="0.01" value="0.5" class="w-full mt-1 accent-[#bcd1e5]">
+              </div>
+              <div class="flex flex-col gap-3 pb-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB-COc3mJ6abTpN12fagHZpANjQ4U01R0rW5KST7OLL2cj4trsfhUl4wY0SySqerbcuIldi5MGV77DimzWbIm-FMXk4Id0YkkgY-c8QGHd-8RrSQ54p3NBbzYUE3wXgh2xePylVnRGHYSCEzO1lzizmn6xdOooWK4j8UgA9vF4I9XkPsZBT4zHtSiojXn4zijoaQ3MzCx-n0Jt_Ca2lM7pmOTQt45Bd8SSWwqLxF8ZkwMEH798oAm7SE6tLRHUhYi7OEOIy7Oil-xpB");'
+                ></div>
+                <div class="flex items-center gap-2">
+                  <p class="text-white text-base font-medium leading-normal mb-0">カフェ</p>
+                  <button id="play-cafe" class="bg-[#bcd1e5] text-[#151a1e] rounded-full w-8 h-8 flex items-center justify-center focus:outline-none">
+                    <span id="icon-cafe">
+                      <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor"><polygon points="5,3 15,9 5,15"/></svg>
+                    </span>
+                  </button>
+                </div>
+                <input id="volume-cafe" type="range" min="0" max="1" step="0.01" value="0.5" class="w-full mt-1 accent-[#bcd1e5]">
+              </div>
+              <div class="flex flex-col gap-3 pb-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCYvbnprtgxRNxoAoBkzPTfhluXuR1hjdx79os8BvSQRmMxatK7cI4aJPSIsVlh0SAxl9Tt1_5QxdztODYoStj0Nq1gp2FP0hyp_kYcOJB1pA-vJMZ2qvHpicV02QEK4mL7lDdvQAe64lW0l5yBB3A23MiJshUpqFVxJWEy2S96Tb3owyOslCjWmHT_IwIWuA_b6jzkLZ72fFJOc8RYa880nlfcoj90D_rHviRyDnv_JWGJ5s2dHD_fgn0mm_j8puaFYeyBrCoF1Dx2");'
+                ></div>
+                <div class="flex items-center gap-2">
+                  <p class="text-white text-base font-medium leading-normal mb-0">波</p>
+                  <button id="play-wave" class="bg-[#bcd1e5] text-[#151a1e] rounded-full w-8 h-8 flex items-center justify-center focus:outline-none">
+                    <span id="icon-wave">
+                      <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor"><polygon points="5,3 15,9 5,15"/></svg>
+                    </span>
+                  </button>
+                </div>
+                <input id="volume-wave" type="range" min="0" max="1" step="0.01" value="0.5" class="w-full mt-1 accent-[#bcd1e5]">
+              </div>
+            </div>
+            <div class="@container">
+              <div class="relative flex w-full flex-col items-start justify-between gap-3 p-4 @[480px]:flex-row @[480px]:items-center">
+                <div class="flex w-full shrink-[3] items-center justify-between">
+                  <p class="text-white text-base font-medium leading-normal">全体の音量</p>
+                  <p class="text-white text-sm font-normal leading-normal @[480px]:hidden">50</p>
+                </div>
+                <div class="flex h-4 w-full items-center gap-4">
+                  <div class="flex h-1 flex-1 rounded-sm bg-[#3f4d5a]">
+                    <div class="h-full w-[32%] rounded-sm bg-[#bcd1e5]"></div>
+                    <div class="relative"><div class="absolute -left-2 -top-1.5 size-4 rounded-full bg-[#bcd1e5]"></div></div>
+                  </div>
+                  <p class="text-white text-sm font-normal leading-normal hidden @[480px]:block">50</p>
+                </div>
+              </div>
+            </div>
+            
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      // ▼▼▼ サウンド再生・音量調整用Web Audio API ▼▼▼
+      const soundFiles = {
+        rain: 'sounds/rain.mp3',
+        cafe: 'sounds/cafe.mp3',
+        wave: 'sounds/wave.mp3',
+        fire: 'sounds/fire.mp3',
+      };
+      const soundStates = {
+        rain: { ctx: null, gain: null, source: null, playing: false, buffer: null },
+        cafe: { ctx: null, gain: null, source: null, playing: false, buffer: null },
+        wave: { ctx: null, gain: null, source: null, playing: false, buffer: null },
+        fire: { ctx: null, gain: null, source: null, playing: false, buffer: null },
+      };
+      window.soundStates = soundStates; // Three.jsスクリプトから参照できるようにグローバル化
+      async function toggleSound(type) {
+        const state = soundStates[type];
+        if (!state.ctx) state.ctx = new (window.AudioContext || window.webkitAudioContext)();
+        if (!state.gain) {
+          state.gain = state.ctx.createGain();
+          state.gain.gain.value = document.getElementById('volume-' + type).value;
+          state.gain.connect(state.ctx.destination);
+        }
+        if (!state.buffer) {
+          const response = await fetch(soundFiles[type]);
+          const arrayBuffer = await response.arrayBuffer();
+          state.buffer = await state.ctx.decodeAudioData(arrayBuffer);
+        }
+        if (!state.playing) {
+          state.source = state.ctx.createBufferSource();
+          state.source.buffer = state.buffer;
+          state.source.loop = true;
+          state.source.connect(state.gain);
+          state.source.start();
+          state.playing = true;
+          document.getElementById('icon-' + type).innerHTML = '<svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor"><rect x="4" y="3" width="3" height="12"/><rect x="11" y="3" width="3" height="12"/></svg>';
+        } else {
+          if (state.source) {
+            state.source.stop();
+            state.source.disconnect();
+            state.source = null;
+          }
+          state.playing = false;
+          document.getElementById('icon-' + type).innerHTML = '<svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor"><polygon points="5,3 15,9 5,15"/></svg>';
+        }
+        console.log('toggleSound:', type, window.soundStates[type]);
+      }
+      ['rain','cafe','wave','fire'].forEach(type => {
+        document.getElementById('play-' + type).addEventListener('click', () => toggleSound(type));
+        document.getElementById('volume-' + type).addEventListener('input', e => {
+          const state = soundStates[type];
+          if (state.gain) state.gain.gain.value = e.target.value;
+        });
+      });
+      // ▲▲▲ サウンド再生・音量調整用Web Audio API ▲▲▲
+    </script>
+    <script type="module">
+      import * as THREE from 'three';
+
+      // サウンド状態をwindow.soundStatesで管理している前提
+      const soundTypes = ['rain','cafe','wave','fire'];
+      const colors = {
+        rain: 0x64b4ff,
+        cafe: 0xffc878,
+        wave: 0x78dcff,
+        fire: 0xff7850
+      };
+      // シーン・カメラ・レンダラーの初期化
+      const scene = new THREE.Scene();
+      // カメラのZ位置を少し遠ざけて、オブジェクト全体が見えるように調整
+      const camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 0.1, 1000);
+      camera.position.z = 10; // 以前は8でしたが、10に変更
+      
+      const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+      renderer.setClearColor(0x1e283c, 0.2); // 背景色
+      renderer.setSize(window.innerWidth, window.innerHeight);
+
+      // three-canvasにcanvasを追加
+      const threeDiv = document.getElementById('three-canvas');
+      threeDiv.appendChild(renderer.domElement);
+
+      // デバッグ: レンダラーのcanvasサイズをログ出力
+      console.log('Renderer Canvas Size:', renderer.domElement.width, renderer.domElement.height);
+
+      // サウンドごとに球体を用意
+      const spheres = {};
+      soundTypes.forEach((type, i) => {
+        const geometry = new THREE.SphereGeometry(1, 32, 32);
+        const material = new THREE.MeshStandardMaterial({ color: colors[type], transparent: true, opacity: 0.7 });
+        const sphere = new THREE.Mesh(geometry, material);
+        // 球体の初期位置を調整（中心から少し離し、互いに重ならないように）
+        const angle = i * Math.PI/2;
+        sphere.position.set(Math.cos(angle)*3, Math.sin(angle)*3, 0); // 2.5を3に増加
+        sphere.visible = false;
+        scene.add(sphere);
+        spheres[type] = sphere;
+      });
+
+      // ライト
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+      scene.add(ambientLight);
+      const pointLight = new THREE.PointLight(0xffffff, 1);
+      pointLight.position.set(0,0,10);
+      scene.add(pointLight);
+
+      // ウィンドウリサイズ対応
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+
+      // アニメーションループ
+      function animate() {
+        requestAnimationFrame(animate);
+        let t = Date.now() * 0.001;
+
+        // 不要なデバッグログを削除
+        // console.log('--- animate loop ---');
+        // console.log('window.soundStates:', window.soundStates);
+        // for (const type of ['rain', 'cafe', 'wave', 'fire']) {
+        //   const state = window.soundStates[type];
+        //   console.log(`${type} state:`, state);
+        //   if (state && state.playing) {
+        //     console.log(`${type} is playing!`);
+        //   }
+        // }
+        // console.log('--------------------');
+
+
+        if (!window.soundStates) return;
+
+        soundTypes.forEach((type, i) => {
+          const state = window.soundStates[type];
+          const sphere = spheres[type];
+
+          if (state && state.playing) {
+            let vol = state.gain ? state.gain.gain.value : 0.5;
+            // 球体の大きさを調整（初期サイズを少し大きく）
+            sphere.scale.set(1 + vol*2 + Math.sin(t+i)*0.1, 1 + vol*2 + Math.cos(t+i)*0.1, 1 + vol*2); // 0.7を1に変更
+            sphere.visible = true;
+            sphere.rotation.y += 0.01 + vol*0.02;
+            sphere.rotation.x += 0.005 + vol*0.01;
+          } else {
+            sphere.visible = false;
+          }
+        });
+
+        renderer.render(scene, camera);
+      }
+      animate();
+    </script>
+  </body>
+</html>
