@@ -1,0 +1,105 @@
+<div class="px-40 flex flex-1 justify-center py-5">
+  <div class="layout-content-container flex flex-col max-w-[600px] flex-1">
+    <h2
+      class="text-white tracking-light text-[28px] font-bold leading-tight px-4 text-center pb-3 pt-5"
+    >
+      音量調整
+    </h2>
+    <!-- ▼▼▼ 各環境音の音量スライダー ▼▼▼ -->
+    <div class="flex flex-col gap-6 p-4">
+      <!-- 雨の音量スライダー -->
+      <div>
+        <label
+          class="text-white text-base font-medium leading-normal"
+          for="rainVolume"
+          >雨</label
+        >
+        <input
+          id="rainVolume"
+          type="range"
+          min="0"
+          max="100"
+          value="50"
+          class="w-full accent-[#bcd1e5] mt-2"
+        />
+        <!-- 雨の音量値表示 -->
+        <span class="text-white text-sm ml-2" id="rainVolumeValue">50</span>
+        <!-- 雨の音量スライダーの値を表示するためのコメント -->
+      </div>
+      <!-- 焚き火の音量スライダー -->
+      <div>
+        <label
+          class="text-white text-base font-medium leading-normal"
+          for="fireVolume"
+          >焚き火</label
+        >
+        <input
+          id="fireVolume"
+          type="range"
+          min="0"
+          max="100"
+          value="50"
+          class="w-full accent-[#bcd1e5] mt-2"
+        />
+        <span class="text-white text-sm ml-2" id="fireVolumeValue">50</span>
+        <!-- 焚き火の音量スライダーの値を表示するためのコメント -->
+      </div>
+      <!-- カフェの音量スライダー -->
+      <div>
+        <label
+          class="text-white text-base font-medium leading-normal"
+          for="cafeVolume"
+          >カフェ</label
+        >
+        <input
+          id="cafeVolume"
+          type="range"
+          min="0"
+          max="100"
+          value="50"
+          class="w-full accent-[#bcd1e5] mt-2"
+        />
+        <span class="text-white text-sm ml-2" id="cafeVolumeValue">50</span>
+        <!-- カフェの音量スライダーの値を表示するためのコメント -->
+      </div>
+      <!-- 波の音量スライダー -->
+      <div>
+        <label
+          class="text-white text-base font-medium leading-normal"
+          for="waveVolume"
+          >波</label
+        >
+        <input
+          id="waveVolume"
+          type="range"
+          min="0"
+          max="100"
+          value="50"
+          class="w-full accent-[#bcd1e5] mt-2"
+        />
+        <span class="text-white text-sm ml-2" id="waveVolumeValue">50</span>
+        <!-- 波の音量スライダーの値を表示するためのコメント -->
+      </div>
+    </div>
+    <!-- ▲▲▲ 各環境音の音量スライダー ▲▲▲ -->
+    <!-- ▼▼▼ 全体音量スライダ�� ▼▼▼ -->
+    <div class="mt-8 p-4 bg-[#232a31] rounded-lg">
+      <label
+        class="text-white text-base font-bold leading-normal"
+        for="masterVolume"
+        >全体の音量</label
+      >
+      <input
+        id="masterVolume"
+        type="range"
+        min="0"
+        max="100"
+        value="50"
+        class="w-full accent-[#bcd1e5] mt-2"
+      />
+      <span class="text-white text-sm ml-2" id="masterVolumeValue">50</span>
+      <!-- 全体音量スライダーの値を表示するためのコメント -->
+    </div>
+    <!-- ▲▲▲ 全体音量スライダー ▲▲▲ -->
+  </div>
+</div>

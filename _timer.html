@@ -1,0 +1,57 @@
+<div class="px-40 flex flex-1 justify-center py-5">
+  <div class="layout-content-container flex flex-col max-w-[400px] flex-1">
+    <h2
+      class="text-white tracking-light text-[28px] font-bold leading-tight px-4 text-center pb-3 pt-5"
+    >
+      タイマー
+    </h2>
+    <!-- ▼▼▼ タイマー設定UI ▼▼▼ -->
+    <div class="flex flex-col gap-6 p-4 items-center">
+      <!-- 分・秒の入力欄 -->
+      <div class="flex gap-2 items-center">
+        <input
+          id="minutes"
+          type="number"
+          min="0"
+          max="99"
+          value="25"
+          class="w-16 rounded bg-[#232a31] text-white px-2 py-1 text-center"
+        />
+        <label class="text-white text-base font-medium" for="minutes"
+          >分</label
+        >
+        <input
+          id="seconds"
+          type="number"
+          min="0"
+          max="59"
+          value="0"
+          class="w-16 rounded bg-[#232a31] text-white px-2 py-1 text-center"
+        />
+        <label class="text-white text-base font-medium" for="seconds"
+          >秒</label
+        >
+      </div>
+      <!-- 開始・リセットボタン -->
+      <div class="flex gap-4">
+        <button
+          id="startBtn"
+          class="bg-[#bcd1e5] text-[#151a1e] font-bold rounded-full px-6 py-2"
+        >
+          開始
+        </button>
+        <button
+          id="resetBtn"
+          class="bg-[#2c363f] text-white font-bold rounded-full px-6 py-2"
+        >
+          リセット
+        </button>
+      </div>
+      <!-- 残り時間表示 -->
+      <div class="text-white text-2xl font-bold mt-4" id="timerDisplay">
+        25:00
+      </div>
+    </div>
+    <!-- ▲▲▲ タイマー設定UI ▲▲▲ -->
+  </div>
+</div>

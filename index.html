@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ja" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Focus Soundscape</title>
+
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M42.4379 44C42.4379 44 36.0744 33.9038 41.1692 24C46.8624 12.9336 42.2078 4 42.2078 4L7.01134 4C7.01134 4 11.6577 12.932 5.96912 23.9969C0.876273 33.9029 7.27094 44 7.27094 44L42.4379 44Z' fill='%232c363f'/%3E%3C/svg%3E"
+    />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap"
+    />
+
+    <!-- Scripts -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="main.js" defer></script>
+  </head>
+
+  <body
+    class="bg-white dark:bg-[#151a1e] text-gray-800 dark:text-white transition-colors duration-300"
+    style="font-family: 'Plus Jakarta Sans', 'Noto Sans JP', sans-serif"
+  >
+    <!-- Background Canvas -->
+    <canvas
+      id="bg-canvas"
+      class="fixed top-0 left-0 -z-10 w-full h-full"
+    ></canvas>
+
+    <!-- App Container -->
+    <div class="flex flex-col min-h-screen">
+      <!-- Header -->
+      <header
+        class="flex items-center justify-between px-6 sm:px-10 py-3 border-b border-gray-200 dark:border-[#2c363f] sticky top-0 bg-white/80 dark:bg-[#151a1e]/80 backdrop-blur-sm z-10"
+      >
+        <!-- Logo -->
+        <a
+          href="_toppage.html"
+          class="route-link flex items-center gap-3 text-gray-800 dark:text-white"
+        >
+          <div class="w-6 h-6">
+            <svg
+              viewBox="0 0 48 48"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              class="text-[#2c363f] dark:text-white"
+            >
+              <path
+                d="M42.4379 44C42.4379 44 36.0744 33.9038 41.1692 24C46.8624 12.9336 42.2078 4 42.2078 4L7.01134 4C7.01134 4 11.6577 12.932 5.96912 23.9969C0.876273 33.9029 7.27094 44 7.27094 44L42.4379 44Z"
+                fill="currentColor"
+              ></path>
+            </svg>
+          </div>
+          <h1 class="text-lg font-bold">Focus Soundscape</h1>
+        </a>
+
+        <!-- Navigation -->
+        <nav class="flex items-center gap-4 sm:gap-8">
+          <div class="hidden md:flex items-center gap-6">
+            <a
+              class="route-link text-sm font-medium hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
+              href="_toppage.html"
+              >ホーム</a
+            >
+            <a
+              class="text-sm font-medium hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
+              href="#"
+              >探す</a
+            >
+            <a
+              class="text-sm font-medium hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
+              href="#"
+              >ライブラリ</a
+            >
+          </div>
+
+          <!-- Menu Dropdown -->
+          <div class="relative group">
+            <button
+              class="text-sm font-medium flex items-center gap-1 hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
+              id="menuDropdownBtn"
+            >
+              <span class="hidden sm:inline">メニュー</span>
+              <svg
+                class="w-5 h-5 sm:w-4 sm:h-4"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+            <div
+              class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-[#232a31] rounded-md shadow-lg z-50 border border-gray-200 dark:border-[#2c363f] overflow-hidden"
+              id="menuDropdown"
+            >
+              <a
+                href="./_volume.html"
+                class="route-link block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-[#2c363f]"
+                >音量調整</a
+              >
+              <a
+                href="./_timer.html"
+                class="route-link block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-[#2c363f]"
+                >タイマー</a
+              >
+              <a
+                href="./_settings.html"
+                class="route-link block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-[#2c363f]"
+                >設定</a
+              >
+              <a
+                href="./_preset.html"
+                class="route-link block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-[#2c363f]"
+                >プリセット</a
+              >
+            </div>
+          </div>
+
+          <!-- Theme Toggle -->
+          <label for="theme-toggle" class="flex items-center cursor-pointer">
+            <div class="relative">
+              <input type="checkbox" id="theme-toggle" class="sr-only" />
+              <div class="block bg-gray-600 w-10 h-6 rounded-full"></div>
+              <div
+                class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition"
+              ></div>
+            </div>
+          </label>
+
+          <!-- User Profile -->
+          <div
+            class="hidden sm:block w-10 h-10 rounded-full bg-cover bg-center"
+            style="
+              background-image: url('https://source.unsplash.com/random/100x100?face');
+            "
+          ></div>
+        </nav>
+      </header>
+
+      <!-- Main Content -->
+      <main
+        id="content-container"
+        class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8"
+      >
+        <!-- 動的コンテンツはここにロードされる -->
+        <div class="px-4 sm:px-8 flex flex-1 justify-center py-5">
+          <div
+            class="layout-content-container flex flex-col w-full max-w-4xl min-w-0 flex-1"
+          >
+            <!-- ... -->
+            <div
+              class="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-3 p-4"
+            >
+              <!-- サウンドカードたち -->
+            </div>
+            <!-- ... -->
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
